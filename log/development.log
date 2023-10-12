@@ -603,3 +603,8 @@ Processing by Api::V1::HelloController#index as */*
 Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 95)
 
 
+Started GET "/api/v1/hello" for 172.19.0.1 at 2023-10-12 14:40:20 +0000
+Processing by Api::V1::HelloController#index as */*
+Completed 200 OK in 13ms (Views: 0.6ms | ActiveRecord: 0.0ms | Allocations: 2407)
+
+
