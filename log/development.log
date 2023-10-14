@@ -615,3 +615,37 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 149ms (Views: 45.9ms | ActiveRecord: 0.0ms | Allocations: 6794)
 
 
+Started GET "/" for 172.19.0.1 at 2023-10-14 10:41:19 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-7.0.8/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-7.0.8/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.7ms | Allocations: 525)
+Completed 200 OK in 23ms (Views: 6.3ms | ActiveRecord: 0.0ms | Allocations: 4277)
+
+
+Started GET "/api/v1/hello" for 172.19.0.1 at 2023-10-14 10:41:29 +0000
+Processing by Api::V1::HelloController#index as HTML
+Completed 200 OK in 6ms (Views: 1.0ms | ActiveRecord: 0.0ms | Allocations: 2406)
+
+
+Started GET "/" for 172.19.0.1 at 2023-10-14 10:47:11 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-7.0.8/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-7.0.8/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.9ms | Allocations: 525)
+Completed 200 OK in 27ms (Views: 7.0ms | ActiveRecord: 0.0ms | Allocations: 4277)
+
+
+Started GET "/api/v1/hello" for 172.19.0.1 at 2023-10-14 10:47:18 +0000
+Processing by Api::V1::HelloController#index as HTML
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms | Allocations: 311)
+
+
+Started GET "/api/v1/hello" for 172.19.0.1 at 2023-10-14 10:58:40 +0000
+Processing by Api::V1::HelloController#index as HTML
+Completed 200 OK in 9ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 2340)
+
+
+Started GET "/api/v1/hello" for 172.19.0.1 at 2023-10-14 10:59:03 +0000
+Processing by Api::V1::HelloController#index as HTML
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 85)
+
+
