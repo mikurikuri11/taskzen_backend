@@ -25,4 +25,5 @@
 .idea
 .vscode
 .DS_store
-
+/.ash_history
+/.irb_history
