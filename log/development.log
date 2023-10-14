@@ -608,3 +608,10 @@ Processing by Api::V1::HelloController#index as */*
 Completed 200 OK in 13ms (Views: 0.6ms | ActiveRecord: 0.0ms | Allocations: 2407)
 
 
+Started GET "/" for 172.19.0.1 at 2023-10-14 10:10:52 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-7.0.8/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-7.0.8/lib/rails/templates/rails/welcome/index.html.erb (Duration: 19.7ms | Allocations: 633)
+Completed 200 OK in 149ms (Views: 45.9ms | ActiveRecord: 0.0ms | Allocations: 6794)
+
+
