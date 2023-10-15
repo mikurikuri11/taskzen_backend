@@ -5,6 +5,8 @@ RUN set -eux && \
     apt-get install -y \
       postgresql-client
 
+ENV LANG=C.UTF-8 \
+    TZ=Asia/Tokyo
 
 COPY Gemfile Gemfile.lock* /backend/
 
