@@ -40,13 +40,13 @@ gem 'hirb', '~> 0.7.3'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.19'
 
-gem 'rubocop', '~> 1.57', '>= 1.57.1'
+gem 'rubocop', require: false
 
-gem 'rubocop-performance', '~> 1.19', '>= 1.19.1'
+gem 'rubocop-performance', require: false
 
-gem 'rubocop-rails', '~> 2.21', '>= 2.21.2'
+gem 'rubocop-rails', require: false
 
-gem 'annotate', '~> 3.2'
+gem 'rubocop-rspec', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
