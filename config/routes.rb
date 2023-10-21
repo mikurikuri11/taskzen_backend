@@ -4,4 +4,5 @@ Rails.application.routes.draw do
       resources :hello, only: [:index]
     end
   end
+  post 'auth/:provider/callback', to: 'api/v1/users#create'
 end
