@@ -10,6 +10,10 @@ ENV LANG=C.UTF-8 \
 
 COPY Gemfile Gemfile.lock* /backend/
 
+RUN bundle install
+
+COPY . /backend/
+
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
