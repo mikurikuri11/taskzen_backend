@@ -12,8 +12,16 @@ class Api::V1::TodosController < ApplicationController
 
   def create
     @todo = Todo.new(todo_params)
+    categories = params[:category_ids].split(" ")
     if @todo.save
-      render json: @todo
+      categories.each do |category|
+        TodoCategory.create(todo_id: @todo.id, category_id: category)
+      end
+      category_list = {
+        todo_id: @todo.id,
+        categories: categories
+      }
+      render json: category_list
     else
       render json: { error: "保存に失敗しました" }, status: :unprocessable_entity
     end
