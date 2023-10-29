@@ -19,7 +19,7 @@ class Api::V1::TodosController < ApplicationController
       end
       category_list = {
         todo_id: @todo.id,
-        categories: categories
+        categories:
       }
       render json: category_list
     else
