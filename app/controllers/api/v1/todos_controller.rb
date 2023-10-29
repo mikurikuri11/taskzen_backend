@@ -1,11 +1,12 @@
 class Api::V1::TodosController < ApplicationController
+  before_action :set_todo, only: %i[show update destroy]
+
   def index
     @todos = Todo.all
     render json: @todos
   end
 
   def show
-    @todo = Todo.find_by(id: params[:id])
     render json: @todo
   end
 
@@ -19,7 +20,6 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def update
-    @todo = Todo.find_by(id: params[:id])
     if @todo.update(todo_params)
       render json: @todo
     else
@@ -28,7 +28,6 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def destroy
-    @todo = Todo.find_by(id: params[:id])
     if @todo.destroy
       head :ok
     else
@@ -38,7 +37,11 @@ class Api::V1::TodosController < ApplicationController
 
   private
 
+  def set_todo
+    @todo = Todo.find_by(id: params[:id])
+  end
+
   def todo_params
-    params.require(:todo).permit(:user_id, :title, :description, :due_date, :completed, :zone)
+    params.require(:todo).permit(:user_id, :title, :description, :due_date, :completed, :zone, category_ids: [])
   end
 end
