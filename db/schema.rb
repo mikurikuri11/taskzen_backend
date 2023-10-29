@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_26_215426) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_29_075242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,4 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_215426) do
     t.boolean "active", default: true
   end
 
+  add_foreign_key "todo_categories", "categories"
+  add_foreign_key "todo_categories", "todos"
 end
