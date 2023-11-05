@@ -1,12 +1,12 @@
 class Api::V1::UsersController < ApplicationController
-  def show
-    user = User.find_by!(uid: params[:uid])
-    if user
-      render json: user, status: :ok
-    else
-      render json: { error: 'ユーザーが見つかりません' }, status: :not_found
-    end
-  end
+  # def show
+  #   user = User.find_by!(uid: params[:uid])
+  #   if user
+  #     render json: user, status: :ok
+  #   else
+  #     render json: { error: 'ユーザーが見つかりません' }, status: :not_found
+  #   end
+  # end
 
   def create
     # 条件に該当するデータがあればそれを返す。なければ新規作成
