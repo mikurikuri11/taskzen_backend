@@ -4,7 +4,6 @@ class Todo < ApplicationRecord
   belongs_to :user
   validates :title, presence: true
   validates :user_id, presence: true
-  enum zone: { zone1: 1, zone2: 2, zone3: 3, zone4: 4 }
 
   def self.this_week_completion_rate
     start_of_week = Date.today.beginning_of_week
