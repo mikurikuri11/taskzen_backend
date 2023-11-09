@@ -14,8 +14,22 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def this_week_completion_rate
-    completion_rate = Todo.this_week_completion_rate
-    render json: { completion_rate: completion_rate }
+    uid = params[:uid]
+    user = User.find_by(uid: uid)
+
+    if user.present?
+      todos = Todo.where(user_id: user.id)
+      this_week_todos = todos.where(due_date: Date.today.beginning_of_week..Date.today.end_of_week)
+
+      total_this_week = this_week_todos.count
+      completed_this_week = this_week_todos.where(completed: true).count
+
+      completion_rate = total_this_week.zero? ? 0 : (completed_this_week.to_f / total_this_week) * 100
+
+      render json: { completion_rate: completion_rate }
+    else
+      render json: { error: "指定されたUIDのユーザーが見つかりません" }, status: :not_found
+    end
   end
 
   def index

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :todos, only: [:index, :create, :show, :destroy, :update] do
         collection do
           get 'todos_by_uid/:uid', action: 'todos_by_uid'
+          get 'this_week_completion_rate/:uid', action: 'this_week_completion_rate'
         end
       end
       resources :categories, only: [:index, :create, :destroy, :update]
