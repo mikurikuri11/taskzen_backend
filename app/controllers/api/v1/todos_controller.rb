@@ -1,17 +1,6 @@
 class Api::V1::TodosController < ApplicationController
   before_action :set_todo, only: %i[show update destroy]
 
-  # def todos_by_user
-  #   user_id = params[:user_id]
-  #   @todos = Todo.where(user_id: user_id)
-
-  #   if @todos.any?
-  #     render json: @todos
-  #   else
-  #     render json: { error: "指定されたユーザーのToDoが見つかりません" }, status: :not_found
-  #   end
-  # end
-
   def todos_by_uid
     uid = params[:uid]
     user = User.find_by(uid: uid)
@@ -19,6 +8,25 @@ class Api::V1::TodosController < ApplicationController
     if user.present?
       @todos = Todo.where(user_id: user.id)
       render json: @todos
+    else
+      render json: { error: "指定されたUIDのユーザーが見つかりません" }, status: :not_found
+    end
+  end
+
+  def this_week_completion_rate
+    uid = params[:uid]
+    user = User.find_by(uid: uid)
+
+    if user.present?
+      todos = Todo.where(user_id: user.id)
+      this_week_todos = todos.where(due_date: Date.today.beginning_of_week..Date.today.end_of_week)
+
+      total_this_week = this_week_todos.count
+      completed_this_week = this_week_todos.where(completed: true).count
+
+      completion_rate = total_this_week.zero? ? 0 : (completed_this_week.to_f / total_this_week) * 100
+
+      render json: { completion_rate: completion_rate }
     else
       render json: { error: "指定されたUIDのユーザーが見つかりません" }, status: :not_found
     end
@@ -32,44 +40,6 @@ class Api::V1::TodosController < ApplicationController
   def show
     render json: @todo
   end
-
-  # def create
-  #   @todo = Todo.new(todo_params)
-  #   categories = params[:category_ids].split(" ")
-  #   if @todo.save
-  #     categories.each do |category|
-  #       TodoCategory.create(todo_id: @todo.id, category_id: category)
-  #     end
-  #     category_list = {
-  #       todo_id: @todo.id,
-  #       categories:
-  #     }
-  #     render json: category_list
-  #   else
-  #     render json: { error: "保存に失敗しました" }, status: :unprocessable_entity
-  #   end
-  # end
-
-  # def create
-  #   @todo = Todo.new(todo_params)
-  #   categories = params[:category_ids]&.split(" ") # category_idsが存在しない場合にnilを返す
-
-  #   if @todo.save
-  #     if categories.present?
-  #       categories.each do |category|
-  #         TodoCategory.create(todo_id: @todo.id, category_id: category)
-  #       end
-  #     end
-
-  #     category_list = {
-  #       todo_id: @todo.id,
-  #       categories: categories || [] # categoriesが存在しない場合は空の配列を返す
-  #     }
-  #     render json: category_list
-  #   else
-  #     render json: { error: "保存に失敗しました" }, status: :unprocessable_entity
-  #   end
-  # end
 
   def create
     # Find the user by uid from the request body
