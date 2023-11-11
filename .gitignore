@@ -27,3 +27,5 @@
 .DS_store
 /.ash_history
 /.irb_history
+
+.env
