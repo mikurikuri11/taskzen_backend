@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_05_142031) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_12_082802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "line_notifications", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.time "notification_time"
+    t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_142031) do
     t.boolean "active", default: true
   end
 
+  add_foreign_key "line_notifications", "users"
   add_foreign_key "todo_categories", "categories"
   add_foreign_key "todo_categories", "todos"
 end
