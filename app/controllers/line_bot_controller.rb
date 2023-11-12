@@ -1,6 +1,4 @@
 class LineBotController < ApplicationController
-  protect_from_forgery except: [:callback]
-
   def callback
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -13,10 +11,16 @@ class LineBotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
+          # message = {
+          #   type: 'text',
+          #   text: event.message['text']
+          # }
+          uri = URI('http://localhost:8080/api/v1/todos')
+          res = Net::HTTP.get_response(uri)
+          puts res.body if res.is_a?(Net::HTTPSuccess) # 出力の確認
+            message = [
+              {type: "text", text: "メッセージ1"}, {type: "text", text: 'メッセージ2'}
+            ]
           client.reply_message(event['replyToken'], message)
         end
       end
@@ -26,10 +30,10 @@ class LineBotController < ApplicationController
 
   private
 
-    def client
-      @client ||= Line::Bot::Client.new { |config|
-        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-      }
-    end
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+  end
 end
