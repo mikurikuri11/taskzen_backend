@@ -13,6 +13,13 @@ services:
       - "5432:5432"
     # stopでコンテナを落とすならDBのデータは消えないそうなのであえて永続化しない
 
+  redis:
+    image: redis:latest
+    volumes:
+      - ./tmp/redis:/data
+    ports:
+      - "6379:6379"
+
   backend:
     build:
       context: .
@@ -32,3 +39,12 @@ services:
     stdin_open: true
     # -tを意味する
     tty: true
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    env_file:
+      - .env

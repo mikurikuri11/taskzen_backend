@@ -52,6 +52,12 @@ gem 'line-bot-api', '~> 1.28'
 
 gem 'dotenv-rails', '~> 2.6'
 
+gem 'redis', '~> 5.0', '>= 5.0.8'
+
+gem 'sidekiq', '~> 7.2'
+
+gem 'sidekiq-scheduler', '~> 5.0', '>= 5.0.3'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
