@@ -23,9 +23,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_052355) do
   create_table "line_notifications", force: :cascade do |t|
     t.integer "user_id"
     t.boolean "active", default: true, null: false
-    t.integer "notification_time", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "notification_time", default: 1, null: false
   end
 
   create_table "todo_categories", force: :cascade do |t|

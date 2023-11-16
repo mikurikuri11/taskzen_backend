@@ -86,6 +86,7 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hirb (0.7.3)
+    httpclient (2.8.3)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -221,6 +222,7 @@ DEPENDENCIES
   debug
   dotenv-rails (~> 2.6)
   hirb (~> 0.7.3)
+  httpclient (~> 2.8, >= 2.8.3)
   line-bot-api (~> 1.28)
   pg (~> 1.1)
   puma (~> 5.0)
