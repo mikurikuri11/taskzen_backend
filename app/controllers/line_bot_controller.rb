@@ -15,9 +15,10 @@ class LineBotController < ApplicationController
           #   type: 'text',
           #   text: event.message['text']
           # }
-          uri = URI('http://localhost:8080/api/v1/todos')
-          res = Net::HTTP.get_response(uri)
-          puts res.body if res.is_a?(Net::HTTPSuccess) # 出力の確認
+          # uri = URI(ENV["API_URL"])
+          # res = Net::HTTP.get_response(uri)
+          search_and_create_message()
+          # puts res.body if res.is_a?(Net::HTTPSuccess)
             message = [
               {type: "text", text: "メッセージ1"}, {type: "text", text: 'メッセージ2'}
             ]
@@ -35,5 +36,12 @@ class LineBotController < ApplicationController
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
       config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
     }
+  end
+
+  def search_and_create_message()
+    http_client = HTTPClient.new
+    uri = URI("http://localhost:8080/api/v1/todos")
+    res = http_client.get(uri)
+    p res.body
   end
 end
