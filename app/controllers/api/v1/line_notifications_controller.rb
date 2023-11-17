@@ -4,22 +4,9 @@ class Api::V1::LineNotificationsController < ApplicationController
   def update_or_create
     @line_notification = LineNotification.find_or_initialize_by(user_id: @user.id)
 
-    @line_notification.update(line_notification_params);
+    @line_notification.update(line_notification_params)
 
     render json: @line_notification
-    # @line_notification = LineNotification.find_by(user_id: @user.id)
-
-    # if @line_notification
-    #   # 既存のレコードがある場合は更新
-    #   @line_notification.update(line_notification_params)
-    #   render json: @line_notification
-    # else
-    #   # 既存のレコードがない場合は新規作成
-    #   @line_notification = LineNotification.new(line_notification_params)
-    #   @line_notification.user = @user
-    #   @line_notification.save!
-    #   render json: @line_notification
-    # end
   end
 
   private

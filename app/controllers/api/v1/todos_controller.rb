@@ -1,25 +1,27 @@
 class Api::V1::TodosController < ApplicationController
+  include Api::V1::Concerns::TodosResponse
+
   before_action :set_user, only: [:todos_by_uid, :this_week_completion_rate, :create]
   before_action :set_todo, only: [:show, :update, :destroy]
 
   def todos_by_uid
-    render_user_not_found and return unless @user.present?
+    render_user_not_found and return if @user.blank?
 
     @todos = @user.todos
     render json: @todos
   end
 
   def this_week_completion_rate
-    render_user_not_found and return unless @user.present?
+    render_user_not_found and return if @user.blank?
 
-    this_week_todos = @user.todos.where(due_date: Date.today.beginning_of_week..Date.today.end_of_week)
+    this_week_todos = @user.todos.where(due_date: Time.zone.today.all_week)
 
     total_this_week = this_week_todos.count
     completed_this_week = this_week_todos.where(completed: true).count
 
     completion_rate = total_this_week.zero? ? 0 : (completed_this_week.to_f / total_this_week) * 100
 
-    render json: { completion_rate: completion_rate }
+    render json: { completion_rate: }
   end
 
   def index
@@ -35,9 +37,8 @@ class Api::V1::TodosController < ApplicationController
     @todo = @user.todos.build(todo_params)
 
     if @todo.save
-      create_todo_categories if params[:category_ids].present?
-
-      render_todo_with_categories
+      create_todo_categories(@todo, params[:category_ids]) if params[:category_ids].present?
+      render_todo_with_categories(@todo, params[:category_ids])
     else
       render_error("保存に失敗しました", :unprocessable_entity)
     end
@@ -67,24 +68,5 @@ class Api::V1::TodosController < ApplicationController
 
   def todo_params
     params.require(:todo).permit(:title, :description, :due_date, :completed, :zone, category_ids: [])
-  end
-
-  def create_todo_categories
-    params[:category_ids].split(" ").each do |category|
-      TodoCategory.create(todo_id: @todo.id, category_id: category)
-    end
-  end
-
-  def render_user_not_found
-    render_error("指定されたUIDのユーザーが見つかりません", :not_found)
-  end
-
-  def render_todo_with_categories
-    category_list = { todo_id: @todo.id, categories: params[:category_ids].split(" ") }
-    render json: category_list
-  end
-
-  def render_error(message, status)
-    render json: { error: message }, status: status
   end
 end

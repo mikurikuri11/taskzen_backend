@@ -29,3 +29,5 @@
 /.irb_history
 
 .env
+
+.config/master.key
