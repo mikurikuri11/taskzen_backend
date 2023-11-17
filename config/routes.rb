@@ -13,8 +13,6 @@ Rails.application.routes.draw do
           put 'update_or_create/:uid', action: 'update_or_create'
         end
       end
-
-      resources :hello, only: [:index]
     end
   end
   post 'auth/:provider/callback', to: 'api/v1/users#create'
