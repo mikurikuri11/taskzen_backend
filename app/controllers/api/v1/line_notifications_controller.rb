@@ -4,7 +4,7 @@ class Api::V1::LineNotificationsController < ApplicationController
   def update_or_create
     @line_notification = LineNotification.find_or_initialize_by(user_id: @user.id)
 
-    @line_notification.update(line_notification_params);
+    @line_notification.update(line_notification_params)
 
     render json: @line_notification
     # @line_notification = LineNotification.find_by(user_id: @user.id)

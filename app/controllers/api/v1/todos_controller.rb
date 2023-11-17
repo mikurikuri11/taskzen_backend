@@ -3,23 +3,23 @@ class Api::V1::TodosController < ApplicationController
   before_action :set_todo, only: [:show, :update, :destroy]
 
   def todos_by_uid
-    render_user_not_found and return unless @user.present?
+    render_user_not_found and return if @user.blank?
 
     @todos = @user.todos
     render json: @todos
   end
 
   def this_week_completion_rate
-    render_user_not_found and return unless @user.present?
+    render_user_not_found and return if @user.blank?
 
-    this_week_todos = @user.todos.where(due_date: Date.today.beginning_of_week..Date.today.end_of_week)
+    this_week_todos = @user.todos.where(due_date: Time.zone.today.all_week)
 
     total_this_week = this_week_todos.count
     completed_this_week = this_week_todos.where(completed: true).count
 
     completion_rate = total_this_week.zero? ? 0 : (completed_this_week.to_f / total_this_week) * 100
 
-    render json: { completion_rate: completion_rate }
+    render json: { completion_rate: }
   end
 
   def index
@@ -70,7 +70,7 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def create_todo_categories
-    params[:category_ids].split(" ").each do |category|
+    params[:category_ids].chars.each do |category|
       TodoCategory.create(todo_id: @todo.id, category_id: category)
     end
   end
@@ -80,11 +80,11 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def render_todo_with_categories
-    category_list = { todo_id: @todo.id, categories: params[:category_ids].split(" ") }
+    category_list = { todo_id: @todo.id, categories: params[:category_ids].chars }
     render json: category_list
   end
 
   def render_error(message, status)
-    render json: { error: message }, status: status
+    render json: { error: message }, status:
   end
 end
