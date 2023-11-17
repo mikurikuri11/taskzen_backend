@@ -21,7 +21,7 @@ class Api::V1::TodosController < ApplicationController
 
     completion_rate = total_this_week.zero? ? 0 : (completed_this_week.to_f / total_this_week) * 100
 
-    render json: { completion_rate: completion_rate }
+    render json: { completion_rate: }
   end
 
   def index

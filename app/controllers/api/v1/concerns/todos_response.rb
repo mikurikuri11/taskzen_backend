@@ -12,7 +12,7 @@ module Api::V1::Concerns
     end
 
     def render_error(message, status)
-      render json: { error: message }, status: status
+      render json: { error: message }, status:
     end
   end
 end
