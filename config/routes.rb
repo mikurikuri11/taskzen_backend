@@ -16,5 +16,4 @@ Rails.application.routes.draw do
     end
   end
   post 'auth/:provider/callback', to: 'api/v1/users#create'
-  post 'callback' => 'line_bot#callback'
 end
