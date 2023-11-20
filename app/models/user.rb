@@ -7,7 +7,7 @@ class User < ApplicationRecord
     client = HTTPClient.new
 
     begin
-      response = client.get("http://localhost:8080/api/v1/todos/this_week_completion_rate/#{id}")
+      response = client.get("#{ENV.fetch('API_URL', nil)}/#{id}")
 
       if response.status == 200
         # レスポンスが成功した場合、JSONから達成率を取得
