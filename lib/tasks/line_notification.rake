@@ -17,10 +17,10 @@ namespace :line_notification do
       puts "achievement_rate: #{achievement_rate}"
       puts "Sending message to #{user.uid}: #{message[:text]}"
 
-      puts "現在時刻 #{Time.now.strftime('%k').to_sym}"
+      puts "現在時刻 #{Time.now.strftime('%k').strip.to_sym}"
       puts "通知時刻 #{notification.notification_time.to_sym}"
 
-      if Time.now.strftime('%k').to_sym == notification.notification_time.to_sym
+      if Time.now.strftime('%k').strip.to_sym == notification.notification_time.to_sym
         response = client.push_message(user.uid, message)
       else
         puts "この時間には#{user.name}にメッセージを送信しません。"
