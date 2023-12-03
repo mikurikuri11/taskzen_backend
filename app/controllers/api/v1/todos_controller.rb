@@ -35,10 +35,13 @@ class Api::V1::TodosController < ApplicationController
 
   def create
     @todo = @user.todos.build(todo_params)
-
+    category_ids = params[:category_ids] || []
+  
     if @todo.save
-      create_todo_categories(@todo, params[:category_ids]) if params[:category_ids].present?
-      render_todo_with_categories(@todo, params[:category_ids])
+      category_ids.each do |category_id|
+        TodoCategory.create(todo_id: @todo.id, category_id: category_id)
+      end
+      render_todo_with_categories(@todo, category_ids)
     else
       render_error("保存に失敗しました", :unprocessable_entity)
     end
