@@ -1,5 +1,5 @@
 class Api::V1::CategoriesController < ApplicationController
-  before_action :set_user, only: %i[categories_by_uid create_by_uid]
+  before_action :set_user, only: %i[categories_by_uid create]
   before_action :set_category, only: %i[update destroy]
 
   def categories_by_uid
@@ -7,10 +7,10 @@ class Api::V1::CategoriesController < ApplicationController
     render json: @categories
   end
 
-  def create_by_uid
+  def create
     @category = @user.categories.build(category_params)
     if @category.save
-      render json: @category, status: :created
+      render json: @category
     else
       render json: { error: "カテゴリーの作成に失敗しました" }, status: :unprocessable_entity
     end

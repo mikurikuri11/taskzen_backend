@@ -7,10 +7,9 @@ Rails.application.routes.draw do
           get 'this_week_completion_rate/:uid', action: 'this_week_completion_rate'
         end
       end
-      resources :categories, only: [:destroy, :update] do
+      resources :categories, only: [:create, :destroy, :update] do
         collection do
           get 'categories_by_uid/:uid', action: 'categories_by_uid'
-          post 'create_by_uid/:uid', action: 'create_by_uid'
         end
       end
       resources :line_notifications, only: [:update_or_create] do
