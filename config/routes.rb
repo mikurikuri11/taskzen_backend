@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :categories, only: [:create, :destroy, :update] do
         collection do
           get 'categories_by_uid/:uid', action: 'categories_by_uid'
+          get 'categories_by_todo/:id', action: 'categories_by_todo'
         end
       end
       resources :line_notifications, only: [:update_or_create] do
