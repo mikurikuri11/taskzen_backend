@@ -7,7 +7,7 @@ module Api::V1::Concerns
     end
 
     def render_todo_with_categories(todo, category_ids)
-      category_list = { todo_id: todo.id, categories: category_ids.chars }
+      category_list = { todo_id: todo.id, categories: category_ids }
       render json: category_list
     end
 
