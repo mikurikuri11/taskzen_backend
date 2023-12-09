@@ -40,14 +40,6 @@ gem 'hirb', '~> 0.7.3'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.19'
 
-gem 'rubocop', require: false
-
-gem 'rubocop-performance', require: false
-
-gem 'rubocop-rails', require: false
-
-gem 'rubocop-rspec', require: false
-
 gem 'line-bot-api', '~> 1.28'
 
 gem 'dotenv-rails', '~> 2.6'
@@ -62,5 +54,13 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem 'rubocop', require: false
+
+  gem 'rubocop-performance', require: false
+
+  gem 'rubocop-rails', require: false
+
+  gem 'rubocop-rspec', require: false
 end
 
