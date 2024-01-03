@@ -1,7 +1,7 @@
 class Api::V1::TodosController < ApplicationController
   include Api::V1::Concerns::TodosResponse
 
-  before_action :set_user, only: [:todos_by_uid, :this_week_completion_rate, :create]
+  before_action :set_user, only: [:todos_by_uid, :complete_todo, :incomplete_todo, :incomplete_todo_by_one, :incomplete_todo_by_two, :incomplete_todo_by_three, :incomplete_todo_by_four, :this_week_completion_rate, :create]
   before_action :set_todo, only: [:show, :update, :destroy]
 
   def todos_by_uid
@@ -9,6 +9,48 @@ class Api::V1::TodosController < ApplicationController
 
     @todos = @user.todos
     render json: @todos
+  end
+
+  def complete_todo
+    render_user_not_found and return if @user.blank?
+
+    completed_todos = @user.todos.where(completed: true)
+    render json: completed_todos
+  end
+
+  def incomplete_todo
+    render_user_not_found and return if @user.blank?
+
+    incomplete_todos = @user.todos.where(completed: false)
+    render json: incomplete_todos
+  end
+
+  def incomplete_todo_by_one
+    render_user_not_found and return if @user.blank?
+
+    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 1)
+    render json: incomplete_todos_by_one
+  end
+
+  def incomplete_todo_by_two
+    render_user_not_found and return if @user.blank?
+
+    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 2)
+    render json: incomplete_todos_by_one
+  end
+
+  def incomplete_todo_by_three
+    render_user_not_found and return if @user.blank?
+
+    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 3)
+    render json: incomplete_todos_by_one
+  end
+
+  def incomplete_todo_by_four
+    render_user_not_found and return if @user.blank?
+
+    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 4)
+    render json: incomplete_todos_by_one
   end
 
   def this_week_completion_rate
