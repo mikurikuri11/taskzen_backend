@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :todos, dependent: :destroy
   has_one :line_notification, dependent: :destroy
   has_many :categories, dependent: :destroy
+  has_many :achievements, dependent: :destroy
 
   def calculate_achievement_rate(id)
     client = HTTPClient.new

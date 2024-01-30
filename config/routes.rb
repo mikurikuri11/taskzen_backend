@@ -6,10 +6,6 @@ Rails.application.routes.draw do
           get 'todos_by_uid/:uid', action: 'todos_by_uid'
           get 'complete_todo/:uid', action: 'complete_todo'
           get 'incomplete_todo/:uid', action: 'incomplete_todo'
-          get 'incomplete_todo_by_one/:uid', action: 'incomplete_todo_by_one'
-          get 'incomplete_todo_by_two/:uid', action: 'incomplete_todo_by_two'
-          get 'incomplete_todo_by_three/:uid', action: 'incomplete_todo_by_three'
-          get 'incomplete_todo_by_four/:uid', action: 'incomplete_todo_by_four'
           get 'this_week_completion_rate/:uid', action: 'this_week_completion_rate'
         end
       end

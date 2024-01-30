@@ -25,34 +25,6 @@ class Api::V1::TodosController < ApplicationController
     render json: incomplete_todos
   end
 
-  def incomplete_todo_by_one
-    render_user_not_found and return if @user.blank?
-
-    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 1)
-    render json: incomplete_todos_by_one
-  end
-
-  def incomplete_todo_by_two
-    render_user_not_found and return if @user.blank?
-
-    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 2)
-    render json: incomplete_todos_by_one
-  end
-
-  def incomplete_todo_by_three
-    render_user_not_found and return if @user.blank?
-
-    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 3)
-    render json: incomplete_todos_by_one
-  end
-
-  def incomplete_todo_by_four
-    render_user_not_found and return if @user.blank?
-
-    incomplete_todos_by_one = @user.todos.where(completed: false, zone: 4)
-    render json: incomplete_todos_by_one
-  end
-
   def this_week_completion_rate
     render_user_not_found and return if @user.blank?
 
