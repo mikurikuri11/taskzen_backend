@@ -25,6 +25,7 @@ class Api::V1::TodosController < ApplicationController
     render json: incomplete_todos
   end
 
+  ## TODO: 不要かも
   def this_week_completion_rate
     render_user_not_found and return if @user.blank?
 
