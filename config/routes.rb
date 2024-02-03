@@ -20,6 +20,11 @@ Rails.application.routes.draw do
           put 'update_or_create/:uid', action: 'update_or_create'
         end
       end
+      resources :achievements, only: [:show] do
+        collection do
+          get 'achievements_by_uid/:uid', action: 'achievements_by_uid'
+        end
+      end
     end
   end
   post 'auth/:provider/callback', to: 'api/v1/users#create'
