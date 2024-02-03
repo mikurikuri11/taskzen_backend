@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resources :achievements, only: [:show] do
         collection do
           get 'achievements_by_uid/:uid', action: 'achievements_by_uid'
+          get 'this_week_achievement_rate/:uid', action: 'this_week_achievement_rate'
         end
       end
     end
