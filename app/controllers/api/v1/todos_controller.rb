@@ -90,10 +90,9 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def update_todo_categories(category_ids)
-    @todo.todo_categories.destroy_all
+    existing_category_ids = @todo.category_ids || []
+    updated_category_ids = existing_category_ids | category_ids
 
-    category_ids.each do |category_id|
-      TodoCategory.create(todo_id: @todo.id, category_id: category_id)
-    end
+    @todo.category_ids = updated_category_ids
   end
 end
