@@ -7,22 +7,22 @@ class Api::V1::TodosController < ApplicationController
   def todos_by_uid
     render_user_not_found and return if @user.blank?
 
-    @todos = @user.todos
-    render json: @todos
+    @todos = @user.todos.includes(:categories)
+    render json: @todos, include: :categories
   end
 
   def complete_todo
     render_user_not_found and return if @user.blank?
 
-    completed_todos = @user.todos.where(completed: true)
-    render json: completed_todos
+    completed_todos = @user.todos.includes(:categories).where(completed: true)
+    render json: completed_todos, include: :categories
   end
 
   def incomplete_todo
     render_user_not_found and return if @user.blank?
 
-    incomplete_todos = @user.todos.where(completed: false)
-    render json: incomplete_todos
+    incomplete_todos = @user.todos.includes(:categories).where(completed: false)
+    render json: incomplete_todos, include: :categories
   end
 
   ## TODO: 不要かも
