@@ -64,7 +64,15 @@ class Api::V1::TodosController < ApplicationController
 
   def update
     if @todo.update(todo_params)
-      update_todo_categories(params[:category_ids] || []) if params[:category_ids].present?
+      categories_params = params["categories"] || []
+      category_ids = categories_params.map { |category| category["id"] }
+      # 既存のカテゴリーを削除
+      @todo.categories.clear
+      # 新しいカテゴリーを追加
+      category_ids.each do |category_id|
+        category = Category.find_by(id: category_id)
+        @todo.categories << category if category.present?
+      end
       render json: @todo
     else
       render_error("更新に失敗しました", :unprocessable_entity)
@@ -86,13 +94,6 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :description, :due_date, :completed, :zone, category_ids: [])
-  end
-
-  def update_todo_categories(category_ids)
-    existing_category_ids = @todo.category_ids || []
-    updated_category_ids = existing_category_ids | category_ids
-
-    @todo.category_ids = updated_category_ids
+    params.require(:todo).permit(:title, :description, :due_date, :completed, :zone, categories: [:id, :name])
   end
 end
