@@ -1,7 +1,7 @@
 class Api::V1::TodosController < ApplicationController
   include Api::V1::Concerns::TodosResponse
 
-  before_action :set_user, only: [:todos_by_uid, :complete_todo, :incomplete_todo, :incomplete_todo_by_one, :incomplete_todo_by_two, :incomplete_todo_by_three, :incomplete_todo_by_four, :this_week_completion_rate, :create]
+  before_action :set_user, only: [:todos_by_uid, :complete_todo, :incomplete_todo, :incomplete_todo_by_one, :incomplete_todo_by_two, :incomplete_todo_by_three, :incomplete_todo_by_four, :this_week_completion_rate, :create, :update, :destroy]
   before_action :set_todo, only: [:show, :update, :destroy]
 
   def todos_by_uid
@@ -57,12 +57,14 @@ class Api::V1::TodosController < ApplicationController
         TodoCategory.create(todo_id: @todo.id, category_id: category_id)
       end
       render_todo_with_categories(@todo, category_ids)
+      AchievementCalculator.calculate_and_update_achievements(@user)
     else
       render_error("保存に失敗しました", :unprocessable_entity)
     end
   end
 
   def update
+    puts "ログ：todo_params: #{todo_params}"
     if @todo.update(todo_params)
       categories_params = params["categories"] || []
       category_ids = categories_params.map { |category| category["id"] }
@@ -74,6 +76,7 @@ class Api::V1::TodosController < ApplicationController
         @todo.categories << category if category.present?
       end
       render json: @todo
+      AchievementCalculator.calculate_and_update_achievements(@user)
     else
       render_error("更新に失敗しました", :unprocessable_entity)
     end
@@ -81,6 +84,7 @@ class Api::V1::TodosController < ApplicationController
 
   def destroy
     render_error("削除に失敗しました", :unprocessable_entity) unless @todo.destroy
+    AchievementCalculator.calculate_and_update_achievements(@user)
   end
 
   private

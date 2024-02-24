@@ -1,5 +1,3 @@
-require 'line/bot'
-
 namespace :achievement_rate do
   desc "達成率をテーブルに保存"
   task add_achievement_rate: :environment do
@@ -10,8 +8,16 @@ namespace :achievement_rate do
       start_date = Date.parse(week_range.first.strftime('%d %b %Y'))
       end_date = Date.parse(week_range.last.strftime('%d %b %Y'))
 
-      if Time.zone.today == end_date
-        puts "Achievement rate will be added only on the end_date."
+      existing_achievement = Achievement.find_by(user_id: user.id, achievements_start_date: start_date, achievements_end_date: end_date)
+
+      if existing_achievement
+        puts "Updating existing achievement record..."
+        puts "Old achievement rate: #{existing_achievement.achievement_rate}"
+        puts "New achievement rate: #{achievement_rate}"
+
+        existing_achievement.update(achievement_rate: achievement_rate)
+      else
+        puts "Creating new achievement record..."
         puts "Achievement rate: #{achievement_rate}"
 
         Achievement.create(
@@ -20,8 +26,6 @@ namespace :achievement_rate do
           achievements_start_date: start_date,
           achievements_end_date: end_date
         )
-      else
-        puts "Today is not the end_date. Skipping..."
       end
     end
   end
