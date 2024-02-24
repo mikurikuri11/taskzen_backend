@@ -5,26 +5,13 @@ class User < ApplicationRecord
   has_many :categories, dependent: :destroy
   has_many :achievements, dependent: :destroy
 
-  def calculate_achievement_rate(id)
-    client = HTTPClient.new
+  def calculate_achievement_rate(uid, start_date, end_date)
+    user_todos = todos.where(due_date: start_date..end_date)
+    return 0 if user_todos.empty?
 
-    begin
-      response = client.get("#{ENV.fetch('API_URL', nil)}/#{id}")
+    completed_count = user_todos.where(completed: true).count
+    total_count = user_todos.count
 
-      if response.status == 200
-        # レスポンスが成功した場合、JSONから達成率を取得
-        data = JSON.parse(response.body)
-        achievement_rate = data['completion_rate'].to_i
-      else
-        # レスポンスがエラーの場合、デフォルト値などを設定
-        achievement_rate = 0
-      end
-    rescue HTTPClient::BadResponseError, HTTPClient::TimeoutError => e
-      # 例外が発生した場合、エラー処理を行う
-      puts "Error making API request: #{e.message}"
-      achievement_rate = 0
-    end
-
-    achievement_rate
+    (completed_count.to_f / total_count) * 100
   end
 end

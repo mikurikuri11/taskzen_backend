@@ -57,7 +57,7 @@ class Api::V1::TodosController < ApplicationController
         TodoCategory.create(todo_id: @todo.id, category_id: category_id)
       end
       render_todo_with_categories(@todo, category_ids)
-      AchievementCalculator.calculate_and_update_achievements(@user)
+      AchievementCalculator.calculate_and_update_achievements(@user, @todo)
     else
       render_error("保存に失敗しました", :unprocessable_entity)
     end
@@ -76,7 +76,7 @@ class Api::V1::TodosController < ApplicationController
         @todo.categories << category if category.present?
       end
       render json: @todo
-      AchievementCalculator.calculate_and_update_achievements(@user)
+      AchievementCalculator.calculate_and_update_achievements(@user, @todo)
     else
       render_error("更新に失敗しました", :unprocessable_entity)
     end
@@ -84,7 +84,7 @@ class Api::V1::TodosController < ApplicationController
 
   def destroy
     render_error("削除に失敗しました", :unprocessable_entity) unless @todo.destroy
-    AchievementCalculator.calculate_and_update_achievements(@user)
+    AchievementCalculator.calculate_and_update_achievements(@user, @todo)
   end
 
   private

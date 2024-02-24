@@ -1,9 +1,9 @@
 class AchievementCalculator
-  def self.calculate_and_update_achievements(user)
-    achievement_rate = user.calculate_achievement_rate(user.uid)
-    week_range = Time.zone.today.all_week
-    start_date = Date.parse(week_range.first.strftime('%d %b %Y'))
-    end_date = Date.parse(week_range.last.strftime('%d %b %Y'))
+  def self.calculate_and_update_achievements(user, todo)
+    week_range = (todo.due_date.beginning_of_week..todo.due_date.end_of_week)
+    start_date = week_range.first.to_date
+    end_date = week_range.last.to_date
+    achievement_rate = user.calculate_achievement_rate(user.uid, start_date, end_date)
 
     existing_achievement = Achievement.find_by(user_id: user.id, achievements_start_date: start_date, achievements_end_date: end_date)
 
