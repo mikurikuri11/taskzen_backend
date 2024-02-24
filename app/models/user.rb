@@ -12,6 +12,6 @@ class User < ApplicationRecord
     completed_count = user_todos.where(completed: true).count
     total_count = user_todos.count
 
-    (completed_count.to_f / total_count) * 100
+    ((completed_count.to_f / total_count) * 100).floor
   end
 end
