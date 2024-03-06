@@ -36,7 +36,7 @@ class Api::V1::TodosController < ApplicationController
 
     completion_rate = total_this_week.zero? ? 0 : (completed_this_week.to_f / total_this_week) * 100
 
-    render json: { completion_rate: }
+    render json: { completion_rate: completion_rate }
   end
 
   def index
@@ -67,7 +67,6 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def update
-    puts "ログ：todo_params: #{todo_params}"
     if @todo.update(todo_params)
       categories_params = params["categories"] || []
       category_ids = categories_params.map { |category| category["id"] }
@@ -101,6 +100,9 @@ class Api::V1::TodosController < ApplicationController
   end
 
   def todo_params
+    # パラメーターを受け取る前にdue_dateを変換する
+    params[:todo][:due_date] = (Time.zone.parse(params[:todo][:due_date]) + 9.hours).to_s if params[:todo][:due_date].present?
+    # Strong Parametersを定義する
     params.require(:todo).permit(:title, :description, :due_date, :completed, :zone, categories: [:id, :name])
   end
 end
