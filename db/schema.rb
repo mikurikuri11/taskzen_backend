@@ -10,18 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_04_145002) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_15_053010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "achievements", force: :cascade do |t|
-    t.integer "user_id"
-    t.float "achievement_rate"
-    t.integer "zone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.date "achievement_date"
-  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -29,14 +20,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_04_145002) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_categories_on_user_id"
-  end
-
-  create_table "line_notifications", force: :cascade do |t|
-    t.integer "user_id"
-    t.boolean "active", default: true, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "notification_time", default: 1, null: false
   end
 
   create_table "todo_categories", force: :cascade do |t|
@@ -72,7 +55,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_04_145002) do
   end
 
   add_foreign_key "categories", "users"
-  add_foreign_key "line_notifications", "users"
   add_foreign_key "todo_categories", "categories"
   add_foreign_key "todo_categories", "todos"
 end
